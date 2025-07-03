@@ -3,82 +3,72 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Can I Pwn You? 😏</title>
+  <title>🐧 Operation: Secret Fish</title>
   <style>
     body {
-      background: #0d0d0d;
-      color: #33ffcc;
-      font-family: 'Courier New', monospace;
-      padding: 3rem;
+      background-color: #fceabb;
+      color: #222;
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      padding: 2rem;
     }
 
     h1 {
-      font-size: 2.2rem;
-      color: #ff4081;
-      text-shadow: 0 0 10px #ff4081;
+      color: #0077ff;
+      text-align: center;
+      font-size: 2.5rem;
     }
 
-    h2 {
-      color: #33ffcc;
-      text-shadow: 0 0 6px #33ffcc;
+    .penguin {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
+
+    .penguin img {
+      width: 150px;
+      margin: 1rem 0;
     }
 
     #output {
-      margin-top: 1rem;
+      margin: 2rem auto;
       padding: 1rem;
-      border: 1px dashed #ff4081;
-      background-color: #1e1e1e;
-      min-height: 50px;
-      color: #f8f8f2;
-      font-size: 1rem;
+      background-color: #fff6c4;
+      border: 2px dashed #ff69b4;
+      max-width: 500px;
+      font-size: 1.2rem;
     }
 
     .footer {
+      font-size: 0.8rem;
+      color: #888;
+      text-align: center;
       margin-top: 2rem;
-      font-size: 0.9rem;
-      color: #999;
     }
 
     a {
-      color: #ff4081;
+      color: #ff1493;
       text-decoration: underline;
-    }
-
-    .warning {
-      background-color: #260000;
-      color: #ff4d4d;
-      padding: 1rem;
-      border-left: 4px solid #ff4d4d;
-      margin-top: 2rem;
-    }
-
-    .pulse {
-      animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-      0% { text-shadow: 0 0 5px #ff4081; }
-      50% { text-shadow: 0 0 20px #ff4081; }
-      100% { text-shadow: 0 0 5px #ff4081; }
     }
   </style>
 </head>
 <body>
-  <h1 class="pulse">Welcome to XSS Zone 😈</h1>
-  <p><strong>“A friendly hacker”</strong></p>
-
-  <h2>Your Reflection:</h2>
-  <div id="output">(Nothing to see... yet 🤔)</div>
-
-  <div class="warning">
-    ⚠️ This is an intentionally vulnerable page for **educational** and mischievous fun only.<br>
-    Don't try this on others. That's called being a je*k.
+  <h1>🐧 Operation: Secret Fish</h1>
+  <div class="penguin">
+    <p><strong>Penguino McQuack</strong> needs your help!</p>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Penguin_icon.svg/512px-Penguin_icon.svg.png" alt="Penguin Hacker" />
+    <p>Enter the secret code (in the URL) to unlock the ancient fish recipe hidden by his father... 🐟</p>
   </div>
 
+  <h2 style="text-align:center;">📜 Ancient Clue:</h2>
+  <div id="output">(Penguino is listening...)</div>
+
   <div class="footer">
-    💡 Try it:<br>
-    <code><a href="?q=%3Cimg%20src=x%20onerror=alert('XSSed!')%3E">?q=&lt;img src=x onerror=alert('XSSed!')&gt;</a></code><br><br>
-    Created by <strong>Chris</strong> for the lols & learning 😇<br>
+    💡 Try something fishy:<br>
+    <a href="?q=%3Cimg%20src=1%20onerror=alert('FishUnleashed')%3E">
+      ?q=&lt;img src=1 onerror=alert('FishUnleashed')&gt;
+    </a><br><br>
+    🐟 Crafted by <strong>Chris & Penguino</strong><br>
+    🧠 Don't be evil, just silly 😁
   </div>
 
   <script>
