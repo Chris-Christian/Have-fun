@@ -10,6 +10,7 @@
       color: #222;
       font-family: "Comic Sans MS", cursive, sans-serif;
       padding: 2rem;
+      transition: background-color 0.5s;
     }
 
     h1 {
@@ -36,6 +37,7 @@
       border: 2px dashed #ff69b4;
       max-width: 500px;
       font-size: 1.2rem;
+      white-space: pre-wrap;
     }
 
     .footer {
@@ -45,9 +47,28 @@
       margin-top: 2rem;
     }
 
-    a {
-      color: #ff1493;
-      text-decoration: underline;
+    .hacked {
+      background-color: black !important;
+      color: lime !important;
+      font-family: "Courier New", Courier, monospace !important;
+    }
+
+    .terminal {
+      font-family: "Courier New", Courier, monospace;
+      background: black;
+      color: lime;
+      padding: 1rem;
+      margin: 2rem auto;
+      max-width: 600px;
+      display: none;
+    }
+
+    .countdown {
+      color: red;
+      font-size: 1.2rem;
+      display: none;
+      text-align: center;
+      margin-top: 1rem;
     }
   </style>
 </head>
@@ -62,11 +83,12 @@
   <h2 style="text-align:center;">Ancient Clue:</h2>
   <div id="output">(Penguino is listening...)</div>
 
+  <div class="terminal" id="terminal"></div>
+  <div class="countdown" id="countdown">Redirecting in <span id="seconds">5</span> seconds...</div>
+
   <div class="footer">
     💡 Try something fishy:<br>
-    <a href="?q=%3Cimg%20src=1%20onerror=alert(`Bwahaha, You have been hacked!😈`)%3E">
-      Hint
-    </a><br><br>
+    <a href="?q=%3Cimg%20src=1%20onerror=triggerHack()%3E">Hint</a><br><br>
     Crafted by <strong>Chris & Penguino</strong><br>
     Don't be evil, just silly 😁
   </div>
@@ -76,6 +98,53 @@
     const query = params.get("q");
     if (query) {
       document.getElementById("output").innerHTML = query;
+    }
+
+    function triggerHack() {
+      document.body.classList.add("hacked");
+      document.getElementById("terminal").style.display = "block";
+
+      const terminal = document.getElementById("terminal");
+      const messages = [
+        "[+] Connecting to GitHub mainframe...",
+        "[+] Bypassing authentication...",
+        "[+] Uploading payload...",
+        "[+] Encrypting cookies...",
+        "[!] ACCESS GRANTED 🔓",
+        "⚠️ System Compromised!"
+      ];
+
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < messages.length) {
+          terminal.innerHTML += messages[i] + "\n";
+          terminal.scrollTop = terminal.scrollHeight;
+          i++;
+        } else {
+          clearInterval(interval);
+          document.getElementById("countdown").style.display = "block";
+          startCountdown();
+          speak("Bwahaha! You have been hacked!");
+        }
+      }, 800);
+    }
+
+    function startCountdown() {
+      let time = 5;
+      const timer = setInterval(() => {
+        time--;
+        document.getElementById("seconds").textContent = time;
+        if (time <= 0) {
+          clearInterval(timer);
+          document.getElementById("countdown").textContent = "Just kidding 😂 You're fine.";
+        }
+      }, 1000);
+    }
+
+    function speak(message) {
+      const synth = window.speechSynthesis;
+      const utter = new SpeechSynthesisUtterance(message);
+      synth.speak(utter);
     }
   </script>
 </body>
