@@ -114,6 +114,7 @@
 function triggerHack() {
   alert("Suspicious activity detected! ⚠️\n\nSystem integrity compromised.\nAttempting recovery...");
   document.body.classList.add("hacked");
+  speak("YOU HAVE BEEN HACKED!");
   const leakBox = document.getElementById("leakBox");
   leakBox.style.display = "block";
 
@@ -125,7 +126,6 @@ function triggerHack() {
     "[!] ACCESS GRANTED 🔓",
   ];
 
-  speak("YOU HAVE BEEN HACKED!");
   let i = 0;
   const interval = setInterval(() => {
     if (i < fakeEmails.length) {
