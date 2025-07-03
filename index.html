@@ -11,7 +11,18 @@
       font-family: "Comic Sans MS", cursive, sans-serif;
       padding: 2rem;
       transition: all 0.5s ease;
+      margin: 0;
       overflow: hidden;
+    }
+
+    canvas#matrix {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      background: black;
     }
 
     h1 {
@@ -63,7 +74,7 @@
 
     #leakBox {
       display: none;
-      background: transparent;
+      background: rgba(0, 0, 0, 0.85);
       color: lime;
       padding: 1rem;
       font-family: "Courier New", Courier, monospace;
@@ -71,7 +82,7 @@
       margin: 2rem auto;
       white-space: pre-wrap;
       border: 2px solid lime;
-      z-index: 2;
+      z-index: 10;
       position: relative;
     }
 
@@ -81,24 +92,13 @@
       color: red;
       margin-top: 2rem;
       display: none;
-      z-index: 2;
+      z-index: 10;
       position: relative;
-    }
-
-    canvas#matrixCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      display: none;
-      z-index: 0;
-      pointer-events: none;
     }
   </style>
 </head>
 <body>
-  <canvas id="matrixCanvas"></canvas>
+  <canvas id="matrix"></canvas>
 
   <h1 class="hide-on-hack">🐧 Operation: Secret Fish</h1>
   <div class="penguin hide-on-hack">
@@ -130,9 +130,6 @@
     function triggerHack() {
       alert("Suspicious activity detected! ⚠️\n\nSystem integrity compromised.\nAttempting recovery...");
       document.body.classList.add("hacked");
-      document.getElementById("matrixCanvas").style.display = "block";
-      startMatrixRain();
-
       const leakBox = document.getElementById("leakBox");
       leakBox.style.display = "block";
 
@@ -143,61 +140,71 @@
         "[+] Encrypting cookies...",
         "[!] ACCESS GRANTED 🔓",
       ];
-      speak("YOU HAVE BEEN HACKED!");
+
       let i = 0;
+      speak("YOU HAVE BEEN HACKED!");
+
       const interval = setInterval(() => {
         if (i < fakeEmails.length) {
           leakBox.textContent += fakeEmails[i] + "\n";
           leakBox.scrollTop = leakBox.scrollHeight;
+          speak(fakeEmails[i]);
           i++;
         } else {
           clearInterval(interval);
+          speak("Just kidding. You're safe. Maybe.");
           document.getElementById("finalMsg").style.display = "block";
         }
-      }, 700);
+      }, 1500);
     }
 
     function speak(msg) {
       const synth = window.speechSynthesis;
+      if (!synth) return;
+
+      synth.cancel(); // cancel ongoing speech if any
       const utter = new SpeechSynthesisUtterance(msg);
       utter.rate = 0.9;
       synth.speak(utter);
     }
 
-    // Matrix Rain Effect
-    function startMatrixRain() {
-      const canvas = document.getElementById("matrixCanvas");
-      const ctx = canvas.getContext("2d");
+    // Matrix Rain Background
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
 
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const letters = "01";
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#0F0";
+      ctx.font = fontSize + "px Courier New";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawMatrix, 33);
+
+    // Resize canvas on window resize
+    window.addEventListener("resize", () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-
-      const letters = "アァイィウエカキクケコサシスセソタチツテトナニヌネノハヒフヘホABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-      const fontSize = 16;
-      const columns = canvas.width / fontSize;
-      const drops = Array(Math.floor(columns)).fill(1);
-
-      function draw() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        ctx.fillStyle = "#0F0";
-        ctx.font = fontSize + "px monospace";
-
-        for (let i = 0; i < drops.length; i++) {
-          const text = letters.charAt(Math.floor(Math.random() * letters.length));
-          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-            drops[i] = 0;
-          }
-
-          drops[i]++;
-        }
-      }
-
-      setInterval(draw, 50);
-    }
+    });
   </script>
 </body>
 </html>
