@@ -11,6 +11,7 @@
       font-family: "Comic Sans MS", cursive, sans-serif;
       padding: 2rem;
       transition: all 0.5s ease;
+      overflow: hidden;
     }
 
     h1 {
@@ -62,7 +63,7 @@
 
     #leakBox {
       display: none;
-      background: black;
+      background: transparent;
       color: lime;
       padding: 1rem;
       font-family: "Courier New", Courier, monospace;
@@ -70,6 +71,8 @@
       margin: 2rem auto;
       white-space: pre-wrap;
       border: 2px solid lime;
+      z-index: 2;
+      position: relative;
     }
 
     #finalMsg {
@@ -78,10 +81,25 @@
       color: red;
       margin-top: 2rem;
       display: none;
+      z-index: 2;
+      position: relative;
+    }
+
+    canvas#matrixCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: none;
+      z-index: 0;
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
+  <canvas id="matrixCanvas"></canvas>
+
   <h1 class="hide-on-hack">🐧 Operation: Secret Fish</h1>
   <div class="penguin hide-on-hack">
     <p><strong>Penguino McQuack</strong> needs your help!</p>
@@ -97,9 +115,7 @@
 
   <div class="footer hide-on-hack">
     💡 Try something fishy:<br>
-    <a href="?q=%3Cimg%20src=1%20onerror=triggerHack()%3E">
-      Hint
-    </a><br><br>
+    <a href="?q=%3Cimg%20src=1%20onerror=triggerHack()%3E">Hint</a><br><br>
     Crafted by <strong>Chris & Penguino</strong><br>
     Don't be evil, just silly 😁
   </div>
@@ -116,6 +132,7 @@
       document.body.classList.add("hacked");
       document.getElementById("matrixCanvas").style.display = "block";
       startMatrixRain();
+
       const leakBox = document.getElementById("leakBox");
       leakBox.style.display = "block";
 
@@ -127,7 +144,6 @@
         "[!] ACCESS GRANTED 🔓",
       ];
       speak("YOU HAVE BEEN HACKED!");
-      
       let i = 0;
       const interval = setInterval(() => {
         if (i < fakeEmails.length) {
@@ -147,6 +163,8 @@
       utter.rate = 0.9;
       synth.speak(utter);
     }
+
+    // Matrix Rain Effect
     function startMatrixRain() {
       const canvas = document.getElementById("matrixCanvas");
       const ctx = canvas.getContext("2d");
