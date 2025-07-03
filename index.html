@@ -127,13 +127,13 @@
 
       let i = 0;
       const interval = setInterval(() => {
+        speak("YOU HAVE BEEN HACKED!");
         if (i < fakeEmails.length) {
           leakBox.textContent += fakeEmails[i] + "\n";
           leakBox.scrollTop = leakBox.scrollHeight;
           i++;
         } else {
           clearInterval(interval);
-          speak("YOU HAVE BEEN HACKED!");
           document.getElementById("finalMsg").style.display = "block";
         }
       }, 700);
