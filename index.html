@@ -2,19 +2,60 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>XSS Playground 😈</title>
+  <style>
+    body {
+      font-family: monospace;
+      background-color: #121212;
+      color: #00ff9f;
+      padding: 2rem;
+    }
+
+    h1, h2 {
+      color: #00ffe7;
+    }
+
+    a {
+      color: #ff6b6b;
+      text-decoration: none;
+    }
+
+    #output {
+      margin-top: 1rem;
+      padding: 1rem;
+      background-color: #1e1e1e;
+      border: 1px dashed #00ff9f;
+    }
+
+    .footer {
+      margin-top: 2rem;
+      font-size: 0.8rem;
+      color: #999;
+    }
+  </style>
 </head>
 <body>
-  <h1>XSS Playground 😈</h1>
-  <p>This page is intentionally vulnerable to reflected XSS.</p>
-  <div id="output"></div>
+  <h1>😈 XSS Playground</h1>
+  <p>This page is intentionally vulnerable to <strong>Reflected XSS</strong> — for fun and learning!</p>
+
+  <h2>Result:</h2>
+  <div id="output">(Try putting something in the <code>?q=</code> URL param...)</div>
+
+  <div class="footer">
+    Example:  
+    <a href="?q=%3Cimg%20src=1%20onerror=alert('Pwned!')%3E">
+      ?q=&lt;img src=1 onerror=alert('Pwned!')&gt;
+    </a>
+    <br><br>
+    Built by <strong>Chris</strong> — not for evil 😇
+  </div>
 
   <script>
     const params = new URLSearchParams(window.location.search);
     const query = params.get("q");
     if (query) {
-      // DON'T use innerHTML for this test — use this:
-      document.body.innerHTML += query;
+      document.getElementById("output").innerHTML = query;
     }
   </script>
 </body>
