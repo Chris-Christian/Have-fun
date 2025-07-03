@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>XSS Test</title>
+  </head>
+  <body>
+    <h2>Search Result:</h2>
+    <div id="output"></div>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const query = params.get("q");
+      if (query) {
+        document.getElementById("output").innerHTML = query;
+      }
+    </script>
+  </body>
+</html>
