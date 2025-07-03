@@ -93,7 +93,7 @@
   <div id="output" class="hide-on-hack">(Penguino is listening...)</div>
 
   <div id="leakBox"></div>
-  <div id="finalMsg">😈 Just kidding. You're safe. Or are you? 🫢</div>
+  <div id="finalMsg">Just kidding 😁. You're safe. Maybe 😈</div>
 
   <div class="footer hide-on-hack">
     💡 Try something fishy:<br>
@@ -112,17 +112,17 @@
     }
 
     function triggerHack() {
+      alert("Suspicious activity detected! ⚠️\n\nSystem integrity compromised.\nAttempting recovery...");
       document.body.classList.add("hacked");
       const leakBox = document.getElementById("leakBox");
       leakBox.style.display = "block";
 
       const fakeEmails = [
-        "🔓 Email leak detected!",
-        "chris123@gmail.com : password123",
-        "penguin_lover@iceberg.com : fl1pp3r!",
-        "you@nowhere.net : iHaveNoPrivacy",
-        "admin@somecompany.com : changeme123",
-        "root@localhost : roottoor"
+        "[+] Connecting to GitHub mainframe...",
+        "[+] Bypassing authentication...",
+        "[+] Uploading payload...",
+        "[+] Encrypting cookies...",
+        "[!] ACCESS GRANTED 🔓",
       ];
 
       let i = 0;
@@ -133,7 +133,7 @@
           i++;
         } else {
           clearInterval(interval);
-          speak("Your data has been leaked!");
+          speak("YOU HAVE BEEN HACKED!");
           document.getElementById("finalMsg").style.display = "block";
         }
       }, 700);
