@@ -44,8 +44,8 @@
 
   <div class="footer">
     Example:  
-    <a href="?q=%3Cimg%20src=1%20onerror=alert(&quot;You have been hacked!&quot;)%3E">
-      ?q=&lt;img src=1 onerror=alert(&quot;You have been hacked!&quot;)&gt;
+    <a href="?q=%3Cimg%20src=1%20onerror=alert("You have been hacked!!!")%3E">
+      ?q=&lt;img src=1 onerror=alert("You have been hacked!!!")&gt;
     </a>
     <br><br>
     Built by <strong>Chris</strong> 😇
@@ -55,8 +55,9 @@
     const params = new URLSearchParams(window.location.search);
     const query = params.get("q");
     if (query) {
-      document.getElementById("output").innerHTML = query;
+    document.write(query);
     }
   </script>
+
 </body>
 </html>
