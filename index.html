@@ -114,6 +114,8 @@
     function triggerHack() {
       alert("Suspicious activity detected! ⚠️\n\nSystem integrity compromised.\nAttempting recovery...");
       document.body.classList.add("hacked");
+      document.getElementById("matrixCanvas").style.display = "block";
+      startMatrixRain();
       const leakBox = document.getElementById("leakBox");
       leakBox.style.display = "block";
 
@@ -135,7 +137,6 @@
         } else {
           clearInterval(interval);
           document.getElementById("finalMsg").style.display = "block";
-          startMatrixEffect();
         }
       }, 700);
     }
@@ -146,36 +147,38 @@
       utter.rate = 0.9;
       synth.speak(utter);
     }
-    function startMatrixEffect() {
+    function startMatrixRain() {
       const canvas = document.getElementById("matrixCanvas");
-      canvas.style.display = "block";
       const ctx = canvas.getContext("2d");
 
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
 
-      const letters = "01".split("");
-      const fontSize = 14;
+      const letters = "アァイィウエカキクケコサシスセソタチツテトナニヌネノハヒフヘホABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      const fontSize = 16;
       const columns = canvas.width / fontSize;
       const drops = Array(Math.floor(columns)).fill(1);
 
       function draw() {
         ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+
         ctx.fillStyle = "#0F0";
         ctx.font = fontSize + "px monospace";
 
         for (let i = 0; i < drops.length; i++) {
-          const text = letters[Math.floor(Math.random() * letters.length)];
+          const text = letters.charAt(Math.floor(Math.random() * letters.length));
           ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
           if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
             drops[i] = 0;
           }
+
           drops[i]++;
         }
       }
 
-      setInterval(draw, 33);
+      setInterval(draw, 50);
     }
   </script>
 </body>
