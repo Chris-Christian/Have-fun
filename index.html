@@ -113,8 +113,8 @@
 
 function triggerHack() {
   alert("Suspicious activity detected! ⚠️\n\nSystem integrity compromised.\nAttempting recovery...");
-  document.body.classList.add("hacked");
   speak("YOU HAVE BEEN HACKED!");
+  document.body.classList.add("hacked");
   const leakBox = document.getElementById("leakBox");
   leakBox.style.display = "block";
 
