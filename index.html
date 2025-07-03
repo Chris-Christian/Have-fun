@@ -3,50 +3,72 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>XSS Playground 😈</title>
+  <title>Welcome to the XSS Zone 😈</title>
   <style>
     body {
-      font-family: monospace;
-      background-color: #121212;
-      color: #00ff9f;
+      background-color: #0f0f0f;
+      color: #39ff14;
+      font-family: 'Courier New', Courier, monospace;
       padding: 2rem;
+      text-align: center;
     }
 
-    h1, h2 {
-      color: #00ffe7;
+    h1 {
+      font-size: 2.5rem;
+      color: #ff007f;
     }
 
-    a {
-      color: #ff6b6b;
-      text-decoration: none;
+    h2 {
+      margin-top: 2rem;
+      color: #ffde59;
     }
 
     #output {
       margin-top: 1rem;
       padding: 1rem;
-      background-color: #1e1e1e;
-      border: 1px dashed #00ff9f;
+      background-color: #1a1a1a;
+      border: 2px dashed #39ff14;
+      font-size: 1.2rem;
     }
 
     .footer {
-      margin-top: 2rem;
-      font-size: 0.8rem;
-      color: #999;
+      margin-top: 3rem;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    a {
+      color: #00cfff;
+      text-decoration: underline;
+    }
+
+    .glitch {
+      animation: glitch 1s infinite;
+    }
+
+    @keyframes glitch {
+      0% { text-shadow: 2px 2px #ff00c8; }
+      20% { text-shadow: -2px -2px #00fff9; }
+      40% { text-shadow: 2px -2px #ffcc00; }
+      60% { text-shadow: -2px 2px #00ff95; }
+      80% { text-shadow: 2px 0 #ff3300; }
+      100% { text-shadow: 0 2px #39ff14; }
     }
   </style>
 </head>
 <body>
-  <h1>😈 XSS Playground</h1>
-  <p>This page is intentionally vulnerable to <strong>Reflected XSS</strong> — for fun and learning!</p>
+  <h1 class="glitch">XSS Zone 😈</h1>
+  <p>Welcome. Type something... or try to <strong>pwn me</strong> 🔥</p>
 
-  <h2>Result:</h2>
-  <div id="output">(Try putting something in the <code>?q=</code> URL param...)</div>
+  <h2>Your Payload:</h2>
+  <div id="output">(Waiting for your 'magic'...)</div>
 
   <div class="footer">
-    Example:  
-   <a href="?q=%3Cimg%20src=1%20onerror=alert('youHaveBeenHacked😼')%3E">Click Me</a>
-    <br><br>
-    Built by <strong>Chris</strong> 😇
+    🧪 Try something like:<br>
+    <a href="?q=%3Cimg%20src=1%20onerror=alert('youHaveBeenHacked😼')%3E">
+      CLick Me!
+    </a><br><br>
+    Made by <strong>Chris</strong> for fun & ethical mischief 😇
   </div>
 
   <script>
