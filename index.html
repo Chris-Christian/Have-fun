@@ -14,17 +14,13 @@
       overflow: hidden;
     }
 
-    h1, .penguin, #output, .footer {
-      transition: opacity 0.5s;
-    }
-
     h1 {
       color: #0077ff;
       text-align: center;
       font-size: 2.5rem;
     }
 
-    .penguin {
+    .penguin, #output {
       text-align: center;
       font-size: 1.2rem;
       margin-top: 1rem;
@@ -50,12 +46,8 @@
       color: #888;
       text-align: center;
       margin-top: 2rem;
-    }
-
-    .hacked {
-      background-color: black !important;
-      color: lime !important;
-      font-family: "Courier New", Courier, monospace !important;
+      z-index: 2;
+      position: relative;
     }
 
     .terminal {
@@ -66,7 +58,7 @@
       margin: 2rem auto;
       max-width: 600px;
       display: none;
-      z-index: 10;
+      z-index: 2;
       position: relative;
     }
 
@@ -76,48 +68,67 @@
       display: none;
       text-align: center;
       margin-top: 1rem;
-      z-index: 10;
+      z-index: 2;
       position: relative;
     }
 
-    canvas#matrix {
-      display: none;
+    .hacked {
+      background-color: black !important;
+      color: lime !important;
+      font-family: "Courier New", Courier, monospace !important;
+    }
+
+    #matrixCanvas {
       position: fixed;
       top: 0;
       left: 0;
-      z-index: 5;
-      pointer-events: none;
+      width: 100vw;
+      height: 100vh;
+      display: none;
+      z-index: 1;
     }
 
-    #hacked-msg {
+    #hackedImage {
       display: none;
-      font-size: 2rem;
       text-align: center;
-      color: lime;
-      z-index: 20;
-      position: relative;
       margin-top: 2rem;
+      z-index: 2;
+      position: relative;
+    }
+
+    #hackedImage img {
+      width: 200px;
+      animation: spin 3s infinite linear;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
 <body>
-  <h1 id="main-title">🐧 Operation: Secret Fish</h1>
-  <div class="penguin" id="penguin-area">
+  <h1>🐧 Operation: Secret Fish</h1>
+
+  <div class="penguin" id="penguinSection">
     <p><strong>Penguino McQuack</strong> needs your help!</p>
     <img src="https://static.vecteezy.com/system/resources/previews/002/181/549/non_2x/hungry-penguin-holding-wood-sign-cartoon-illustration-drawing-vector.jpg" alt="Penguin Hacker" />
     <p>Enter the secret code (in the URL) to unlock the ancient fish recipe hidden by his father... 🐟</p>
   </div>
 
-  <h2 style="text-align:center;" id="sub-title">Ancient Clue:</h2>
+  <h2 style="text-align:center;">Ancient Clue:</h2>
   <div id="output">(Penguino is listening...)</div>
 
-  <canvas id="matrix"></canvas>
+  <canvas id="matrixCanvas"></canvas>
+
+  <div id="hackedImage">
+    <img src="https://i.ibb.co/bXnMSQD/skull.png" alt="Skull" />
+    <p>You've been hacked by the Fish Syndicate 😈🐟</p>
+  </div>
 
   <div class="terminal" id="terminal"></div>
-  <div id="hacked-msg">💀 YOU'VE BEEN HACKED 💀</div>
   <div class="countdown" id="countdown">Redirecting in <span id="seconds">5</span> seconds...</div>
 
-  <div class="footer" id="footer">
+  <div class="footer">
     💡 Try something fishy:<br>
     <a href="?q=%3Cimg%20src=1%20onerror=triggerHack()%3E">Hint</a><br><br>
     Crafted by <strong>Chris & Penguino</strong><br>
@@ -132,22 +143,21 @@
     }
 
     function triggerHack() {
-      // Hide normal content
-      document.getElementById("main-title").style.opacity = 0;
-      document.getElementById("penguin-area").style.opacity = 0;
-      document.getElementById("sub-title").style.opacity = 0;
-      document.getElementById("output").style.opacity = 0;
-      document.getElementById("footer").style.opacity = 0;
-
-      // Change styling
       document.body.classList.add("hacked");
+
+      // Hide normal stuff
+      document.getElementById("penguinSection").style.display = "none";
+      document.getElementById("output").style.display = "none";
+      
+      // Show scary stuff
+      document.getElementById("matrixCanvas").style.display = "block";
+      document.getElementById("hackedImage").style.display = "block";
       document.getElementById("terminal").style.display = "block";
-      document.getElementById("hacked-msg").style.display = "block";
 
-      // Matrix effect
-      document.getElementById("matrix").style.display = "block";
-      startMatrixRain();
+      // Matrix animation
+      startMatrix();
 
+      // Terminal typing
       const terminal = document.getElementById("terminal");
       const messages = [
         "[+] Connecting to GitHub mainframe...",
@@ -155,7 +165,7 @@
         "[+] Uploading payload...",
         "[+] Encrypting cookies...",
         "[!] ACCESS GRANTED 🔓",
-        "⚠️ SYSTEM COMPROMISED"
+        "⚠️ System Compromised!"
       ];
 
       let i = 0;
@@ -191,18 +201,19 @@
       synth.speak(utter);
     }
 
-    function startMatrixRain() {
-      const canvas = document.getElementById("matrix");
+    function startMatrix() {
+      const canvas = document.getElementById("matrixCanvas");
       const ctx = canvas.getContext("2d");
 
-      canvas.height = window.innerHeight;
       canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
 
-      const chars = "アァイィウヴエェオカガキギクグケゲコゴサシスセソタチツテナニヌネノハバパヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
-      const matrix = chars.split("");
-      const fontSize = 14;
+      const letters = "01魚𓆉𓆡☠️".split("");
+      const fontSize = 16;
       const columns = canvas.width / fontSize;
-      const drops = Array(Math.floor(columns)).fill(1);
+      const drops = [];
+
+      for (let x = 0; x < columns; x++) drops[x] = 1;
 
       function draw() {
         ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
@@ -211,16 +222,16 @@
         ctx.font = fontSize + "px monospace";
 
         for (let i = 0; i < drops.length; i++) {
-          const text = matrix[Math.floor(Math.random() * matrix.length)];
+          const text = letters[Math.floor(Math.random() * letters.length)];
           ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+
+          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975)
             drops[i] = 0;
-          }
           drops[i]++;
         }
       }
 
-      setInterval(draw, 50);
+      setInterval(draw, 33);
     }
   </script>
 </body>
