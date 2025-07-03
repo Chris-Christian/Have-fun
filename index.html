@@ -11,7 +11,6 @@
       font-family: "Comic Sans MS", cursive, sans-serif;
       padding: 2rem;
       transition: background-color 0.5s;
-      overflow: hidden;
     }
 
     h1 {
@@ -20,7 +19,7 @@
       font-size: 2.5rem;
     }
 
-    .penguin, #output {
+    .penguin {
       text-align: center;
       font-size: 1.2rem;
       margin-top: 1rem;
@@ -46,8 +45,12 @@
       color: #888;
       text-align: center;
       margin-top: 2rem;
-      z-index: 2;
-      position: relative;
+    }
+
+    .hacked {
+      background-color: black !important;
+      color: lime !important;
+      font-family: "Courier New", Courier, monospace !important;
     }
 
     .terminal {
@@ -58,8 +61,6 @@
       margin: 2rem auto;
       max-width: 600px;
       display: none;
-      z-index: 2;
-      position: relative;
     }
 
     .countdown {
@@ -68,48 +69,12 @@
       display: none;
       text-align: center;
       margin-top: 1rem;
-      z-index: 2;
-      position: relative;
-    }
-
-    .hacked {
-      background-color: black !important;
-      color: lime !important;
-      font-family: "Courier New", Courier, monospace !important;
-    }
-
-    #matrixCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      display: none;
-      z-index: 1;
-    }
-
-    #hackedImage {
-      display: none;
-      text-align: center;
-      margin-top: 2rem;
-      z-index: 2;
-      position: relative;
-    }
-
-    #hackedImage img {
-      width: 200px;
-      animation: spin 3s infinite linear;
-    }
-
-    @keyframes spin {
-      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
 <body>
   <h1>🐧 Operation: Secret Fish</h1>
-
-  <div class="penguin" id="penguinSection">
+  <div class="penguin">
     <p><strong>Penguino McQuack</strong> needs your help!</p>
     <img src="https://static.vecteezy.com/system/resources/previews/002/181/549/non_2x/hungry-penguin-holding-wood-sign-cartoon-illustration-drawing-vector.jpg" alt="Penguin Hacker" />
     <p>Enter the secret code (in the URL) to unlock the ancient fish recipe hidden by his father... 🐟</p>
@@ -117,13 +82,6 @@
 
   <h2 style="text-align:center;">Ancient Clue:</h2>
   <div id="output">(Penguino is listening...)</div>
-
-  <canvas id="matrixCanvas"></canvas>
-
-  <div id="hackedImage">
-    <img src="https://i.ibb.co/bXnMSQD/skull.png" alt="Skull" />
-    <p>You've been hacked by the Fish Syndicate 😈🐟</p>
-  </div>
 
   <div class="terminal" id="terminal"></div>
   <div class="countdown" id="countdown">Redirecting in <span id="seconds">5</span> seconds...</div>
@@ -144,20 +102,8 @@
 
     function triggerHack() {
       document.body.classList.add("hacked");
-
-      // Hide normal stuff
-      document.getElementById("penguinSection").style.display = "none";
-      document.getElementById("output").style.display = "none";
-      
-      // Show scary stuff
-      document.getElementById("matrixCanvas").style.display = "block";
-      document.getElementById("hackedImage").style.display = "block";
       document.getElementById("terminal").style.display = "block";
 
-      // Matrix animation
-      startMatrix();
-
-      // Terminal typing
       const terminal = document.getElementById("terminal");
       const messages = [
         "[+] Connecting to GitHub mainframe...",
@@ -178,7 +124,7 @@
           clearInterval(interval);
           document.getElementById("countdown").style.display = "block";
           startCountdown();
-          speak("Bwahaha! You have been hacked!");
+          speak("Bwahahahahaha You have been hacked!");
         }
       }, 800);
     }
@@ -199,39 +145,6 @@
       const synth = window.speechSynthesis;
       const utter = new SpeechSynthesisUtterance(message);
       synth.speak(utter);
-    }
-
-    function startMatrix() {
-      const canvas = document.getElementById("matrixCanvas");
-      const ctx = canvas.getContext("2d");
-
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      const letters = "01魚𓆉𓆡☠️".split("");
-      const fontSize = 16;
-      const columns = canvas.width / fontSize;
-      const drops = [];
-
-      for (let x = 0; x < columns; x++) drops[x] = 1;
-
-      function draw() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "#0F0";
-        ctx.font = fontSize + "px monospace";
-
-        for (let i = 0; i < drops.length; i++) {
-          const text = letters[Math.floor(Math.random() * letters.length)];
-          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975)
-            drops[i] = 0;
-          drops[i]++;
-        }
-      }
-
-      setInterval(draw, 33);
     }
   </script>
 </body>
