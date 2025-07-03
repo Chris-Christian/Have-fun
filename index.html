@@ -10,7 +10,7 @@
       color: #222;
       font-family: "Comic Sans MS", cursive, sans-serif;
       padding: 2rem;
-      transition: background-color 0.5s;
+      transition: all 0.5s ease;
     }
 
     h1 {
@@ -37,7 +37,6 @@
       border: 2px dashed #ff69b4;
       max-width: 500px;
       font-size: 1.2rem;
-      white-space: pre-wrap;
     }
 
     .footer {
@@ -53,42 +52,54 @@
       font-family: "Courier New", Courier, monospace !important;
     }
 
-    .terminal {
-      font-family: "Courier New", Courier, monospace;
-      background: black;
-      color: lime;
-      padding: 1rem;
-      margin: 2rem auto;
-      max-width: 600px;
+    .hide-on-hack {
+      display: block;
+    }
+
+    .hacked .hide-on-hack {
       display: none;
     }
 
-    .countdown {
-      color: red;
-      font-size: 1.2rem;
+    #leakBox {
       display: none;
+      background: black;
+      color: lime;
+      padding: 1rem;
+      font-family: "Courier New", Courier, monospace;
+      max-width: 600px;
+      margin: 2rem auto;
+      white-space: pre-wrap;
+      border: 2px solid lime;
+    }
+
+    #finalMsg {
       text-align: center;
-      margin-top: 1rem;
+      font-size: 1.3rem;
+      color: red;
+      margin-top: 2rem;
+      display: none;
     }
   </style>
 </head>
 <body>
-  <h1>🐧 Operation: Secret Fish</h1>
-  <div class="penguin">
+  <h1 class="hide-on-hack">🐧 Operation: Secret Fish</h1>
+  <div class="penguin hide-on-hack">
     <p><strong>Penguino McQuack</strong> needs your help!</p>
     <img src="https://static.vecteezy.com/system/resources/previews/002/181/549/non_2x/hungry-penguin-holding-wood-sign-cartoon-illustration-drawing-vector.jpg" alt="Penguin Hacker" />
     <p>Enter the secret code (in the URL) to unlock the ancient fish recipe hidden by his father... 🐟</p>
   </div>
 
-  <h2 style="text-align:center;">Ancient Clue:</h2>
-  <div id="output">(Penguino is listening...)</div>
+  <h2 style="text-align:center;" class="hide-on-hack">Ancient Clue:</h2>
+  <div id="output" class="hide-on-hack">(Penguino is listening...)</div>
 
-  <div class="terminal" id="terminal"></div>
-  <div class="countdown" id="countdown">Redirecting in <span id="seconds">5</span> seconds...</div>
+  <div id="leakBox"></div>
+  <div id="finalMsg">😈 Just kidding. You're safe. Or are you? 🫢</div>
 
-  <div class="footer">
+  <div class="footer hide-on-hack">
     💡 Try something fishy:<br>
-    <a href="?q=%3Cimg%20src=1%20onerror=triggerHack()%3E">Hint</a><br><br>
+    <a href="?q=%3Cimg%20src=1%20onerror=triggerHack()%3E">
+      Hint
+    </a><br><br>
     Crafted by <strong>Chris & Penguino</strong><br>
     Don't be evil, just silly 😁
   </div>
@@ -102,48 +113,36 @@
 
     function triggerHack() {
       document.body.classList.add("hacked");
-      document.getElementById("terminal").style.display = "block";
+      const leakBox = document.getElementById("leakBox");
+      leakBox.style.display = "block";
 
-      const terminal = document.getElementById("terminal");
-      const messages = [
-        "[+] Connecting to GitHub mainframe...",
-        "[+] Bypassing authentication...",
-        "[+] Uploading payload...",
-        "[+] Encrypting cookies...",
-        "[!] ACCESS GRANTED 🔓",
-        "⚠️ System Compromised!"
+      const fakeEmails = [
+        "🔓 Email leak detected!",
+        "chris123@gmail.com : password123",
+        "penguin_lover@iceberg.com : fl1pp3r!",
+        "you@nowhere.net : iHaveNoPrivacy",
+        "admin@somecompany.com : changeme123",
+        "root@localhost : roottoor"
       ];
 
       let i = 0;
       const interval = setInterval(() => {
-        if (i < messages.length) {
-          terminal.innerHTML += messages[i] + "\n";
-          terminal.scrollTop = terminal.scrollHeight;
+        if (i < fakeEmails.length) {
+          leakBox.textContent += fakeEmails[i] + "\n";
+          leakBox.scrollTop = leakBox.scrollHeight;
           i++;
         } else {
           clearInterval(interval);
-          document.getElementById("countdown").style.display = "block";
-          startCountdown();
-          speak("Bwahahahahaha You have been hacked!");
+          speak("Your data has been leaked!");
+          document.getElementById("finalMsg").style.display = "block";
         }
-      }, 800);
+      }, 700);
     }
 
-    function startCountdown() {
-      let time = 5;
-      const timer = setInterval(() => {
-        time--;
-        document.getElementById("seconds").textContent = time;
-        if (time <= 0) {
-          clearInterval(timer);
-          document.getElementById("countdown").textContent = "Just kidding 😂 You're fine.";
-        }
-      }, 1000);
-    }
-
-    function speak(message) {
+    function speak(msg) {
       const synth = window.speechSynthesis;
-      const utter = new SpeechSynthesisUtterance(message);
+      const utter = new SpeechSynthesisUtterance(msg);
+      utter.rate = 0.9;
       synth.speak(utter);
     }
   </script>
