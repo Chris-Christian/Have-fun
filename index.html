@@ -124,10 +124,9 @@
         "[+] Encrypting cookies...",
         "[!] ACCESS GRANTED 🔓",
       ];
-
+      speak("YOU HAVE BEEN HACKED!");
       let i = 0;
       const interval = setInterval(() => {
-        speak("YOU HAVE BEEN HACKED!");
         if (i < fakeEmails.length) {
           leakBox.textContent += fakeEmails[i] + "\n";
           leakBox.scrollTop = leakBox.scrollHeight;
