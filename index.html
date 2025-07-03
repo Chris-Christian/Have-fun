@@ -36,19 +36,19 @@
   </style>
 </head>
 <body>
-  <h1>😈 XSS Playground</h1>
-  <p>This page is intentionally vulnerable to <strong>Reflected XSS</strong> — for fun and learning!</p>
+  <h1>XSS Playground 😈 </h1>
+  <p>This page is intentionally vulnerable to <strong>Reflected XSS</strong> for fun and learning!</p>
 
   <h2>Result:</h2>
   <div id="output">(Try putting something in the <code>?q=</code> URL param...)</div>
 
   <div class="footer">
     Example:  
-    <a href="?q=%3Cimg%20src=1%20onerror=alert('Pwned!')%3E">
-      ?q=&lt;img src=1 onerror=alert('Pwned!')&gt;
+    <a href="?q=%3Cimg%20src=1%20onerror=alert("You Have been hacked!!!")%3E">
+      ?q=&lt;img src=1 onerror=alert("You have been hacked!")&gt;
     </a>
     <br><br>
-    Built by <strong>Chris</strong> — not for evil 😇
+    Built by <strong>Chris</strong> 😇
   </div>
 
   <script>
