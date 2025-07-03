@@ -125,7 +125,7 @@
         "[!] ACCESS GRANTED 🔓",
       ];
       speak("YOU HAVE BEEN HACKED!");
-      startMatrixEffect();
+      
       let i = 0;
       const interval = setInterval(() => {
         if (i < fakeEmails.length) {
@@ -135,6 +135,7 @@
         } else {
           clearInterval(interval);
           document.getElementById("finalMsg").style.display = "block";
+          startMatrixEffect();
         }
       }, 700);
     }
