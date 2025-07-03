@@ -51,32 +51,32 @@
     }
   </style>
 </head>
-<body>
-  <h1>🐧 Operation: Secret Fish</h1>
-  <div class="penguin">
-    <p><strong>Penguino McQuack</strong> needs your help!</p>
-    <img src="https://static.vecteezy.com/system/resources/previews/002/181/549/non_2x/hungry-penguin-holding-wood-sign-cartoon-illustration-drawing-vector.jpg" alt="Penguin Hacker" />
-    <p>Enter the secret code (in the URL) to unlock the ancient fish recipe hidden by his father... 🐟</p>
-  </div>
+  <body>
+    <h1>🐟 Ancient Fish Protocol 🧬</h1>
+    <div class="lore">
+      "Penguino’s father hid the ultimate fish recipe inside this page...<br>
+      Only a precise payload can summon it."
+    </div>
 
-  <h2 style="text-align:center;">📜 Ancient Clue:</h2>
-  <div id="output">(Penguino is listening...)</div>
+    <button class="button" onclick="window.location.search='?q=%3Cimg%20src=1%20onerror=fish()%3E'">
+      Click to Summon the Fish 🐟
+    </button>
 
-  <div class="footer">
-    💡 Try something fishy:<br>
-    <a href="?q=%3Cimg%20src=1%20onerror=alert('FishUnleashed')%3E">
-      ?q=&lt;img src=1 onerror=alert('FishUnleashed')&gt;
-    </a><br><br>
-    🐟 Crafted by <strong>Chris & Penguino</strong><br>
-    🧠 Don't be evil, just silly 😁
-  </div>
+    <div id="output" style="margin-top: 40px; font-size: 20px;"></div>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const query = params.get("q");
-    if (query) {
-      document.getElementById("output").innerHTML = query;
-    }
-  </script>
-</body>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const query = params.get("q");
+
+      if (query === "<img src=1 onerror=fish()>") {
+        fish();
+      } else if (query) {
+        document.getElementById("output").innerText = query;
+      }
+
+      function fish() {
+        alert("🐟 Father's Recipe: 3x Sardines, 1x Shell Injection, 1x Trust Issue");
+      }
+    </script>
+  </body>
 </html>
