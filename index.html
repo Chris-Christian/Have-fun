@@ -3,72 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Welcome to the XSS Zone 😈</title>
+  <title>Can I Pwn You? 😏</title>
   <style>
     body {
-      background-color: #0f0f0f;
-      color: #39ff14;
-      font-family: 'Courier New', Courier, monospace;
-      padding: 2rem;
-      text-align: center;
+      background: #0d0d0d;
+      color: #33ffcc;
+      font-family: 'Courier New', monospace;
+      padding: 3rem;
     }
 
     h1 {
-      font-size: 2.5rem;
-      color: #ff007f;
+      font-size: 2.2rem;
+      color: #ff4081;
+      text-shadow: 0 0 10px #ff4081;
     }
 
     h2 {
-      margin-top: 2rem;
-      color: #ffde59;
+      color: #33ffcc;
+      text-shadow: 0 0 6px #33ffcc;
     }
 
     #output {
       margin-top: 1rem;
       padding: 1rem;
-      background-color: #1a1a1a;
-      border: 2px dashed #39ff14;
-      font-size: 1.2rem;
+      border: 1px dashed #ff4081;
+      background-color: #1e1e1e;
+      min-height: 50px;
+      color: #f8f8f2;
+      font-size: 1rem;
     }
 
     .footer {
-      margin-top: 3rem;
-      font-size: 0.85rem;
-      color: #888;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #999;
     }
 
     a {
-      color: #00cfff;
+      color: #ff4081;
       text-decoration: underline;
     }
 
-    .glitch {
-      animation: glitch 1s infinite;
+    .warning {
+      background-color: #260000;
+      color: #ff4d4d;
+      padding: 1rem;
+      border-left: 4px solid #ff4d4d;
+      margin-top: 2rem;
     }
 
-    @keyframes glitch {
-      0% { text-shadow: 2px 2px #ff00c8; }
-      20% { text-shadow: -2px -2px #00fff9; }
-      40% { text-shadow: 2px -2px #ffcc00; }
-      60% { text-shadow: -2px 2px #00ff95; }
-      80% { text-shadow: 2px 0 #ff3300; }
-      100% { text-shadow: 0 2px #39ff14; }
+    .pulse {
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { text-shadow: 0 0 5px #ff4081; }
+      50% { text-shadow: 0 0 20px #ff4081; }
+      100% { text-shadow: 0 0 5px #ff4081; }
     }
   </style>
 </head>
 <body>
-  <h1 class="glitch">XSS Zone 😈</h1>
-  <p>Welcome. Type something... or try to <strong>pwn me</strong> 🔥</p>
+  <h1 class="pulse">Welcome to XSS Zone 😈</h1>
+  <p><strong>“A friendly hacker”</strong></p>
 
-  <h2>Your Payload:</h2>
-  <div id="output">(Waiting for your 'magic'...)</div>
+  <h2>Your Reflection:</h2>
+  <div id="output">(Nothing to see... yet 🤔)</div>
+
+  <div class="warning">
+    ⚠️ This is an intentionally vulnerable page for **educational** and mischievous fun only.<br>
+    Don't try this on others. That's called being a je*k.
+  </div>
 
   <div class="footer">
-    🧪 Try something like:<br>
-    <a href="?q=%3Cimg%20src=1%20onerror=alert('youHaveBeenHacked😼')%3E">
-      CLick Me!
-    </a><br><br>
-    Made by <strong>Chris</strong> for fun & ethical mischief 😇
+    💡 Try it:<br>
+    <code><a href="?q=%3Cimg%20src=x%20onerror=alert('XSSed!')%3E">?q=&lt;img src=x onerror=alert('XSSed!')&gt;</a></code><br><br>
+    Created by <strong>Chris</strong> for the lols & learning 😇<br>
   </div>
 
   <script>
